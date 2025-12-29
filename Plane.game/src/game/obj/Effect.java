@@ -84,15 +84,14 @@ public class Effect {
     public void update()
     {
         current_distance += speed;
+        alpha -= 0.05f;
     }
     public boolean check()
     {
-        return current_distance<max_distance;
+        return current_distance<max_distance && alpha > 0;
     }
 
-    public Effect get(int i) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+   
     
             
 }

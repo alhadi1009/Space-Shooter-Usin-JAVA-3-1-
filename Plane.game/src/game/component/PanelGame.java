@@ -244,7 +244,15 @@ public class PanelGame extends JComponent {
                         rockets.remove(rocket);
                         double x = rocket.getX() + Rocket.ROCKET_SIZE / 2;
                         double y = rocket.getY() + Rocket.ROCKET_SIZE / 2;
-                        boomEffects.add(new Effect(x, y, 5, 5, 75, 0.05f, new Color(32, 178, 169)));
+                          boomEffects.add(new Effect(x, y, 5, 5, 75, 2.0f, new Color(32,178,169)));
+                         boomEffects.add(new Effect(x, y, 5, 5, 75, 2.0f, new Color(32,178,169)));
+                         boomEffects.add(new Effect(x, y, 5, 5, 75, 2.0f, new Color(32,178,169)));
+                          boomEffects.add(new Effect(x, y, 5, 5, 75, 2.0f, new Color(32,178,169)));
+                          boomEffects.add(new Effect(x, y, 5, 5, 75, 2.0f, new Color(32,178,169)));
+                          boomEffects.add(new Effect(x, y, 5, 5, 75, 2.0f, new Color(32,178,169)));
+                          boomEffects.add(new Effect(x, y, 5, 5, 75, 2.0f, new Color(32,178,169)));
+
+
 
                     }
                     // rockets.remove(rocket);
