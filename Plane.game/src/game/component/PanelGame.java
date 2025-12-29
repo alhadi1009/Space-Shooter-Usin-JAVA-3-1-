@@ -1,15 +1,18 @@
 
 package game.component;
+import game.obj.Bullet;
 import game.obj.Player;
 import static game.obj.Player.PLAYER_SIZE;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.List;
 import java.awt.RenderingHints;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static javax.swing.DropMode.ON;
@@ -26,6 +29,7 @@ public class PanelGame extends JComponent{
     private Thread thread;
     private boolean start=true;
     private Key key;
+    private int shotTime;
     
     
 //Game FPS
@@ -33,6 +37,7 @@ public class PanelGame extends JComponent{
     private final int TARGET_TIME=1000000000 / FPS;
     // Game Object
     private Player player;
+    private List<Bullet>bullets;
     
     public void start()
     {
@@ -66,6 +71,7 @@ public class PanelGame extends JComponent{
             
         });
         initObjectGame();
+        initBullets();      // <<< BEFORE threads start
         initKeyboard();
         thread.start();
     }
@@ -144,6 +150,39 @@ public class PanelGame extends JComponent{
                     {
                         angle+=s;
                     }
+                    if(key.isKey_j() || key.isKey_k())
+                    {
+                        if(shotTime==0)
+                        {
+                            if(key.isKey_j())
+                            {
+                                bullets.add(0,new Bullet(player.getX(),player.getY(),player.getAngle(), 5, 3f));
+                            }else
+                            {
+                                bullets.add(0,new Bullet(player.getX(),player.getY(),player.getAngle(), 20, 3f));
+
+                            }
+                           
+                        }
+                         shotTime++;
+                            if(shotTime==15)
+                            {
+                                shotTime=0;
+                            }
+                    }else
+                    {
+                        shotTime=0 ;
+                    }
+                    
+                    
+                    if(key.isKey_space())
+                    {
+                        player.speedUp();
+                    }else 
+                    {
+                        player.speedDown();
+                    }
+                    player.update();
                     player.changeAngle(angle);
                     sleep(5);
                     
@@ -155,6 +194,35 @@ public class PanelGame extends JComponent{
         
     }
     
+    private void initBullets()
+    {
+        bullets =new ArrayList<>();
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run(){
+                while(start)
+                {
+                    for(int i=0;i<bullets.size();i++){
+                       Bullet bullet= bullets.get(i);
+                       if(bullet!=null)
+                       {
+                           bullet.update();
+                           if(!bullet.check(width,height))
+                           {
+                               bullets.remove(bullet);
+                           }
+                       }else
+                       {
+                           bullets.remove(bullet);
+                       }
+                    }
+                }
+            }
+            
+        }).start();
+    }
+    
     private void drawBackground()
     {
         g2.setColor(new Color(30,30,30));
@@ -163,7 +231,14 @@ public class PanelGame extends JComponent{
     private void drawGame()
     {
         player.draw(g2);
-        
+        for(int i=0;i<bullets.size();i++)
+        {
+            Bullet bullet = bullets.get(i);
+            if(bullet != null)
+            {
+                bullet.draw(g2);
+            }
+        }   
     }
     private void render()
     {

@@ -16,15 +16,24 @@ public class Player {
     public static final double PLAYER_SIZE=64;
     private double x;
     private double y;
+    private final float MAX_SPEED=1f;
+    private float speed=0;
     private float angle=0f;
     private final Image image ;
     private final Image image_speed;
+    private boolean speedUp;
     
     public void changeLocation(double x,double y)
     {
         this.x=x;
         this.y=y;
         
+    }
+    public void update()
+    {
+        x+=Math.cos(Math.toRadians(angle))*speed;
+        y+=Math.sin(Math.toRadians(angle))*speed;
+
     }
     public void changeAngle ( float angle)
     {
@@ -44,7 +53,7 @@ public class Player {
          AffineTransform tran=new  AffineTransform();
         tran.rotate(Math.toRadians(angle+45),PLAYER_SIZE /2,PLAYER_SIZE /2 );
         
-        g2.drawImage(image, tran,null);
+        g2.drawImage(speedUp?image_speed:image, tran,null);
         g2.setTransform(oldTransform);
     }
     public double getX()
@@ -59,6 +68,28 @@ public class Player {
     {
         return angle;
     }
+      public void speedUp()
+      {
+          speedUp=true;
+          if(speed>MAX_SPEED)
+          {
+              speed=MAX_SPEED;
+          }else 
+          {
+              speed += 0.01f;
+          }
+      }
+      public void speedDown()
+      {
+          speedUp=false;
+          if(speed<=0)
+          {
+              speed=0;
+          }else 
+          {
+              speed -= 0.03f;
+          }
+      }
 
    
     
