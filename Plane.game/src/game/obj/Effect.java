@@ -84,7 +84,7 @@ public class Effect {
     public void update()
     {
         current_distance += speed;
-        alpha -= 0.05f;
+        alpha -= 0.02f;
     }
     public boolean check()
     {

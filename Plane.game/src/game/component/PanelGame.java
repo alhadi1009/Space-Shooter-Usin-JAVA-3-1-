@@ -245,12 +245,15 @@ public class PanelGame extends JComponent {
                         double x = rocket.getX() + Rocket.ROCKET_SIZE / 2;
                         double y = rocket.getY() + Rocket.ROCKET_SIZE / 2;
                           boomEffects.add(new Effect(x, y, 5, 5, 75, 2.0f, new Color(32,178,169)));
-                         boomEffects.add(new Effect(x, y, 5, 5, 75, 2.0f, new Color(32,178,169)));
-                         boomEffects.add(new Effect(x, y, 5, 5, 75, 2.0f, new Color(32,178,169)));
-                          boomEffects.add(new Effect(x, y, 5, 5, 75, 2.0f, new Color(32,178,169)));
-                          boomEffects.add(new Effect(x, y, 5, 5, 75, 2.0f, new Color(32,178,169)));
-                          boomEffects.add(new Effect(x, y, 5, 5, 75, 2.0f, new Color(32,178,169)));
-                          boomEffects.add(new Effect(x, y, 5, 5, 75, 2.0f, new Color(32,178,169)));
+                          boomEffects.add(new Effect(x, y, 5, 5, 75, 0.05f, new Color(32,178,169)));
+                         boomEffects.add(new Effect(x, y, 5, 5, 75, 0.1f, new Color(32,178,169)));
+                          boomEffects.add(new Effect(x, y, 10, 10, 100, 0.3f, new Color(230, 207, 105)));
+                          boomEffects.add(new Effect(x, y, 10, 5, 100, 0.5f, new Color(255,70,70)));
+                          boomEffects.add(new Effect(x, y, 10, 5, 150, 0.2f, new Color(255,255,255)));
+                            boomEffects.add(new Effect(x, y, 5, 5, 75, 2.0f, new Color(255,0,0)));
+                          boomEffects.add(new Effect(x, y, 5, 5, 75, 2.0f, new Color(255,0,0)));
+                         // boomEffects.add(new Effect(x, y, 5, 5, 75, 2.0f, new Color(255,0,0)));
+ 
 
 
 
