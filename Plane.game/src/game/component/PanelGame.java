@@ -246,25 +246,21 @@ public class PanelGame extends JComponent{
         
     }
     
-    private void initBullets()
+   private void initBullets()
     {
         bullets =new ArrayList<>();
-        
     }
-    private void updateBullets()
-{
-    for (int i = 0; i < bullets.size(); i++)
-    {
-        Bullet bullet = bullets.get(i);
-        bullet.update();
-
-        if (!bullet.check(width, height))
-        {
+    private void updateBullets() {
+    for(int i=0; i<bullets.size(); i++){
+        Bullet b = bullets.get(i);
+        b.update();
+        if(!b.check(width, height)){
             bullets.remove(i);
-            i--;
+            i--; 
         }
     }
 }
+
 
     
     private void drawBackground()
