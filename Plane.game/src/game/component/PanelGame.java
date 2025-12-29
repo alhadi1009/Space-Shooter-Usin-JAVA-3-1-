@@ -12,6 +12,7 @@ import java.awt.RenderingHints;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
@@ -252,16 +253,33 @@ public class PanelGame extends JComponent{
     }
     private void updateBullets() {
     for(int i=0; i<bullets.size(); i++){
-        Bullet b = bullets.get(i);
-        b.update();
-        if(!b.check(width, height)){
+        Bullet bullet = bullets.get(i);
+        bullet.update();
+         checkBullets( bullet);
+        if(!bullet.check(width, height)){
             bullets.remove(i);
             i--; 
         }
     }
 }
 
-
+public void checkBullets(Bullet bullet)
+{
+    for(int i=0;i<rockets.size();i++)
+    {
+        Rocket rocket=rockets.get(i);
+        if(rocket!=null)
+        {
+            Area area=new Area(bullet.getShape());
+            area.intersect(rocket.getShape());
+            if(!area.isEmpty())
+            {
+                rockets.remove(rocket);
+                bullets.remove(bullet);
+            }
+        }
+    }
+}
     
     private void drawBackground()
     {
