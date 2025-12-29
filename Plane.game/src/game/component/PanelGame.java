@@ -55,6 +55,7 @@ public class PanelGame extends JComponent{
                 while(start)
                 {
                     long startTime=System.nanoTime();
+                    updateBullets();
                     drawBackground();
                     drawGame();
                     render();
@@ -159,13 +160,13 @@ public class PanelGame extends JComponent{
                                 bullets.add(0,new Bullet(player.getX(),player.getY(),player.getAngle(), 5, 3f));
                             }else
                             {
-                                bullets.add(0,new Bullet(player.getX(),player.getY(),player.getAngle(), 20, 3f));
+                                bullets.add(0,new Bullet(player.getX(),player.getY(),player.getAngle(), 12, 3f));
 
                             }
                            
                         }
                          shotTime++;
-                            if(shotTime==15)
+                            if(shotTime==25)
                             {
                                 shotTime=0;
                             }
@@ -197,31 +198,23 @@ public class PanelGame extends JComponent{
     private void initBullets()
     {
         bullets =new ArrayList<>();
-        new Thread(new Runnable()
-        {
-            @Override
-            public void run(){
-                while(start)
-                {
-                    for(int i=0;i<bullets.size();i++){
-                       Bullet bullet= bullets.get(i);
-                       if(bullet!=null)
-                       {
-                           bullet.update();
-                           if(!bullet.check(width,height))
-                           {
-                               bullets.remove(bullet);
-                           }
-                       }else
-                       {
-                           bullets.remove(bullet);
-                       }
-                    }
-                }
-            }
-            
-        }).start();
+        
     }
+    private void updateBullets()
+{
+    for (int i = 0; i < bullets.size(); i++)
+    {
+        Bullet bullet = bullets.get(i);
+        bullet.update();
+
+        if (!bullet.check(width, height))
+        {
+            bullets.remove(i);
+            i--;
+        }
+    }
+}
+
     
     private void drawBackground()
     {
