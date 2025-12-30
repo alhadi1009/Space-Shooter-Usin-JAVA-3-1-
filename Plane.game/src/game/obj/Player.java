@@ -1,17 +1,32 @@
 
 package game.obj;
 
+// import static game.obj.Rocket.ROCKET_SIZE;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
+import java.awt.geom.Path2D;
 import java.net.URL;
 import javax.swing.ImageIcon;
 
 
-public class Player {
+public class Player extends HpRender{
     public Player(){
+        super(new HP(50, 50 ));
     this.image=new ImageIcon(getClass().getResource("/game/image/plane.png")).getImage();
     this.image_speed=new ImageIcon(getClass().getResource("/game/image/plane_speed.png")).getImage();
+    Path2D p=new Path2D.Double();
+    p.moveTo(0,15);
+    p.lineTo(20, 5);
+    p.lineTo(PLAYER_SIZE+15, PLAYER_SIZE/2);
+    p.lineTo(20,PLAYER_SIZE-5);
+    p.lineTo(0,PLAYER_SIZE-15);
+    playerShap = new Area(p);
+    
+    
+    
 }
     public static final double PLAYER_SIZE=64;
     private double x;
@@ -19,9 +34,12 @@ public class Player {
     private final float MAX_SPEED=1f;
     private float speed=0;
     private float angle=0f;
+    private final Area playerShap;
+    
     private final Image image ;
     private final Image image_speed;
     private boolean speedUp;
+    private boolean alive = true;
     
     public void changeLocation(double x,double y)
     {
@@ -54,8 +72,24 @@ public class Player {
         tran.rotate(Math.toRadians(angle+45),PLAYER_SIZE /2,PLAYER_SIZE /2 );
         
         g2.drawImage(speedUp?image_speed:image, tran,null);
+        hpRender(g2,getShape(),y);
         g2.setTransform(oldTransform);
+        
+        // TEST SHAPE;
+//        g2.setColor(new Color(12,173,84));
+//        g2.draw(getShape());
+//        g2.draw(getShape().getBounds());
     }
+    
+    public Area getShape()
+    {
+        AffineTransform afx = new AffineTransform();
+        afx.translate(x, y);
+        afx.rotate(Math.toRadians(angle),PLAYER_SIZE/2, PLAYER_SIZE/2);
+        return new Area(afx.createTransformedShape(playerShap));
+    }
+    
+    
     public double getX()
     {
         return x;
@@ -89,6 +123,22 @@ public class Player {
           {
               speed -= 0.03f;
           }
+      }
+      
+      public boolean isAlive()
+      {
+          return alive;
+      }
+      public void setAlive(boolean alive)
+      {
+          this.alive=alive;
+      }
+      public void reset()
+      {
+          alive =true;
+          resetHP();
+          angle=0;
+          speed=0;
       }
 
    

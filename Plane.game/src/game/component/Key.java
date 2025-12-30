@@ -10,6 +10,9 @@ public class Key {
    public boolean isKey_right() {
     return key_right;
 }
+   public boolean isKey_enter() {
+    return key_enter;
+}
 
 public boolean isKey_left() {
     return key_left;
@@ -29,6 +32,9 @@ public boolean isKey_k() {
 // Setter methods;
 public void setKey_right(boolean key_right) {
     this.key_right = key_right;
+}
+public void setKey_enter(boolean key_enter) {
+    this.key_enter = key_enter;
 }
 
 public void setKey_left(boolean key_left) {
@@ -52,6 +58,7 @@ public void setKey_k(boolean key_k) {
     private boolean key_space;
     private boolean key_j;
     private boolean key_k;
+    private boolean key_enter;
     
     
 }

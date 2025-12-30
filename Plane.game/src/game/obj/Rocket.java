@@ -12,8 +12,9 @@ import java.awt.geom.Path2D;
 import javax.swing.ImageIcon;
 
 
-public class Rocket {
+public class Rocket extends HpRender {
     public Rocket(){
+        super(new HP(20,20));
     this.image=new ImageIcon(getClass().getResource("/game/image/rocket.png")).getImage();
     Path2D p = new Path2D.Double();
     p.moveTo(0,ROCKET_SIZE/2);
@@ -67,12 +68,13 @@ public class Rocket {
         tran.rotate(Math.toRadians(angle +45),ROCKET_SIZE/2 , ROCKET_SIZE/2);
         g2.drawImage(image, tran, null);
         Shape shap = getShape();
+        hpRender(g2,shap,y);
         g2.setTransform(oldTransform);
         
         //TEST 
-        g2.setColor(Color.green);
-        g2.draw(shap);
-        g2.draw(shap.getBounds2D());
+       // g2.setColor(Color.green);
+       // g2.draw(shap);
+        //g2.draw(shap.getBounds2D());
         
     }
     
