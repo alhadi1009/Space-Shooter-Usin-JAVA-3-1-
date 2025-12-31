@@ -5,6 +5,7 @@ import game.obj.Effect;
 import game.obj.Player;
 import static game.obj.Player.PLAYER_SIZE;
 import game.obj.Rocket;
+import game.obj.Sound.Sound;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -41,6 +42,7 @@ public class PanelGame extends JComponent {
     private final int FPS = 60;
     private final int TARGET_TIME = 1000000000 / FPS;
     // Game Object
+    private Sound sound;
     private Player player;
     private List<Bullet> bullets;
     private List<Rocket> rockets;
@@ -97,8 +99,8 @@ public class PanelGame extends JComponent {
     }
 
     private void initObjectGame() {
+        sound= new Sound();
         player = new Player();
-
         player.changeLocation(150, 150);
         rockets = new ArrayList<>();
         boomEffects = new ArrayList<>();
@@ -183,7 +185,7 @@ public class PanelGame extends JComponent {
                             } else {
                                 bullets.add(0, new Bullet(player.getX(), player.getY(), player.getAngle(), 12, 3f));
 
-                            }
+                            }sound.soundShoot();
 
                         }
                         shotTime++;
@@ -279,6 +281,8 @@ public class PanelGame extends JComponent {
                     if (!rocket.updateHP(bullet.getSize())) {// for TEST HP
                         score++;
                         rockets.remove(rocket);
+                        // Player kill;
+                        sound.soundDestroy();
                         double x = rocket.getX() + Rocket.ROCKET_SIZE / 2;
                         double y = rocket.getY() + Rocket.ROCKET_SIZE / 2;
                           boomEffects.add(new Effect(x, y, 5, 5, 75, 2.0f, new Color(32,178,169)));
@@ -294,7 +298,11 @@ public class PanelGame extends JComponent {
 
 
 
+                    }else 
+                    {
+                        sound.soundHit();
                     }
+                    
                     // rockets.remove(rocket);
                     bullets.remove(bullet);
                     return;
@@ -311,6 +319,8 @@ public class PanelGame extends JComponent {
                     double rocketHp= rocket.getHP();
                       if (!rocket.updateHP(player.getHP())) {// for TEST HP
                         rockets.remove(rocket);
+                        // player kill;;
+                         sound.soundDestroy();
                         double x = rocket.getX() + Rocket.ROCKET_SIZE / 2;
                         double y = rocket.getY() + Rocket.ROCKET_SIZE / 2;
                           boomEffects.add(new Effect(x, y, 5, 5, 75, 2.0f, new Color(32,178,169)));
@@ -332,6 +342,8 @@ public class PanelGame extends JComponent {
                    // return;
                    if (!player.updateHP(rocketHp)) {// for TEST HP
                         player.setAlive(false);
+                        // player kill;
+                         sound.soundDestroy();
                         double x = rocket.getX() + Rocket.ROCKET_SIZE / 2;
                         double y = rocket.getY() + Rocket.ROCKET_SIZE / 2;
                           boomEffects.add(new Effect(x, y, 5, 5, 75, 2.0f, new Color(32,178,169)));
